@@ -12,12 +12,13 @@
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'recipes' %}">Recipes</a></li>
+                <li><a href="{% url 'categories' %}">Categories</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-
         {% block content %}
         {% endblock %}
         <div>{% block extraheader %}

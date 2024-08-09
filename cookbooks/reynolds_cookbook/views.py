@@ -8,14 +8,38 @@ tempRecipes = [
     {"title": "Chicken Parmesan", "description": "Breaded chicken with marinara sauce and melted cheese."},
 ]
 
-def home(request):
-    context = {"name": "Reynolds", 'tempRecipes': tempRecipes}
-    return render(request, "reynolds_cookbook/home.html", context)
+tempCategories = [
+    {"name": "Entrees"},
+    {"name": "Appetizers"},
+    {"name": "Desserts"},
+    {"name": "Soups, Stews, and Chili"},
+    {"name": "Salads"},
+]
 
+tempMain = [
+    {"Feature": "Chicken"},
+    {"Feature": "Beef"},
+    {"Feature": "Pork"},
+    {"Feature": "Fish"},
+    {"Feature": "Shrimp"},
+    {"Feature": "Vegeterian"},
+]
+
+def home(request):
+    return render(request, "reynolds_cookbook/home.html")
+
+def recipes(request):
+    context = {"tempRecipes": tempRecipes}
+    return render(request, "reynolds_cookbook/recipes_list.html", context)
 # class RecipesList(ListView):
 #     model = RecipesList
 #     template_name = "reynolds_cookbook/recipes_list.html"
-
+def categories(request):
+    context = {"tempCategories": tempCategories}
+    return render(request, "reynolds_cookbook/categories_list.html", context)
 # class CategoriesList(ListView):
 #     model = CategoriesList
 #     template_name = "reynolds_cookbook/categories_list.html"
+# def main(request):
+#     context = {"tempMain": tempMain}
+#     return render(request, "reynolds_cookbook/main_list.html", context)

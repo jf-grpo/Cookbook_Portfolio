@@ -1,0 +1,10 @@
+{% extends './base.html' %}
+
+{% block content %}
+    <h1>Recipes List</h1>
+    <ul>
+        {% for tempRecipe in tempRecipes %}
+            <li>Title: {{ tempRecipe.title }}, Description: {{ tempRecipe.description }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
