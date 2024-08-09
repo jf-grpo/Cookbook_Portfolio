@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+
+
+{% block extraheader %}
+<h2>Reynolds Cookbook</h2>
+
+    
+    {% for tempRecipe in tempRecipes %}
+    <li>{{ tempRecipe.title }}, {{ tempRecipe.description }}</li>
+    {% endfor %}
+    
+
+
+{% endblock %}
+
+
+
+{% block content %}
+    <h1>Welcome to the Reynolds Cookbook</h1>
+    <p>Here you will find a collection of recipes that have been passed down through the Reynolds family for generations.</p>
+    <p>Click on the links above to view the recipes.</p>
+{% endblock %}
