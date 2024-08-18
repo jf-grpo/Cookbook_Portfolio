@@ -1,0 +1,20 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <div class="card">
+        <h1>{{ recipe.title }}</h1>
+        <p><strong>Author:</strong> {{ recipe.author }}</p>
+        <h2>Ingredients</h2>
+        <ul>
+            {% for ingredient in recipe.ingredients.all %}
+                <li>{{ ingredient.quantity }} {{ ingredient.get_unit_display }} of {{ ingredient.name }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Instructions</h2>
+        <ul>
+            {% for instruction in recipe.instructions.all %}
+                <li>{{ instruction.step_number }}: {{ instruction.description }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

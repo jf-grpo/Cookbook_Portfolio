@@ -1,0 +1,17 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <h1>Desserts</h1>
+    <ul>
+        {% for dessert_type in dessert_types %}
+            <li><a href="{% url 'desserts' %}?filter={{ dessert_type.0 }}">{{ dessert_type.1 }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Recipes</h2>
+    <ul>
+        {% for dessert in desserts %}
+            <li><a href="{% url 'recipe_detail' dessert.id 'desserts' %}">{{ dessert.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

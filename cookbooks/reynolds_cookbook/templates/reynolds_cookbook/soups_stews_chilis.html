@@ -1,0 +1,17 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <h1>Soups, Stews, and Chilis</h1>
+    <ul>
+        {% for soup_type in types %}
+            <li><a href="{% url 'soups_stews_chilis' %}?filter={{ soup_type.0 }}">{{ soup_type.1 }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Recipes</h2>
+    <ul>
+        {% for soup in soups_stews_chilis %}
+            <li><a href="{% url 'recipe_detail' soup.id 'soups_stews_chilis' %}">{{ soup.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

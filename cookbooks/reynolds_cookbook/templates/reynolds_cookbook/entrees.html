@@ -1,0 +1,17 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <h1>Entrees</h1>
+    <ul>
+        {% for main_choice in main_choices %}
+            <li><a href="{% url 'entrees' %}?filter={{ main_choice.0 }}">{{ main_choice.1 }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Recipes</h2>
+    <ul>
+        {% for entree in entrees %}
+            <li><a href="{% url 'recipe_detail' entree.id 'entrees' %}">{{ entree.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
