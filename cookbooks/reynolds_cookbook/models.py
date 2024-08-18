@@ -4,9 +4,15 @@ from django.db import models
 from django.db import models
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=100)
-    category = models.CharField(max_length=50)
+    CATEGORY_CHOICES = [
+        ('entrees', 'Entrees'),
+        ('desserts', 'Desserts'),
+        ('soups_stews_chilis', 'Soups, Stews and Chilis'),
+    ]
+
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)  # Changed to a text field
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
     def __str__(self):
         return self.title
@@ -23,6 +29,14 @@ class Ingredient(models.Model):
         ('oz', 'ounces'),
         ('lb', 'pounds'),
         ('piece', 'piece'),
+        ('can', 'can'),
+        ('jar', 'jar'),
+        ('package', 'package'),
+        ('bunch', 'bunch'),
+        ('pinch', 'pinch'),
+        ('dash', 'dash'),
+        ('to taste', 'to taste'),
+        
     ]
 
     recipe = models.ForeignKey(Recipe, related_name='ingredients', on_delete=models.CASCADE)
