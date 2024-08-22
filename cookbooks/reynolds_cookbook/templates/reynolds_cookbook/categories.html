@@ -1,8 +1,25 @@
 {% extends "./base.html" %}
 
+
+{% block extraheader %}
+<h1>Categories</h1>
+    <header>
+            <h2>
+                <a href="{% url 'entrees' %}">Entrees</a>
+            </h2>
+            <h2>
+                <a href="{% url 'soups_stews_chilis' %}">Soups, Stews, and Chilis</a>
+            </h2>
+            <h2>
+                <a href="{% url 'desserts' %}">Desserts</a>
+            </h2>
+    </header>
+{% endblock %}
+
 {% block content %}
-    <h1>Categories</h1>
+
     <h2>Entrees</h2>
+
     <ul>
         {% for entree in entrees %}
             <li><a href="{% url 'recipe_detail' entree.id 'entrees' %}">{{ entree.title }}</a></li>

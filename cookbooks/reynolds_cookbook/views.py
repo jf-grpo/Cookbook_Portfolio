@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import get_object_or_404
-from .models import Entree, Dessert, SoupStewChili
+from .models import Entree, Dessert, SoupStewChili, Recipe
 
 # Home View
 class HomeView(TemplateView):
@@ -20,7 +20,7 @@ class CategoriesView(TemplateView):
 # Entrees View
 class EntreeListView(ListView):
     model = Entree
-    template_name = 'entrees.html'
+    template_name = 'reynolds_cookbook/entrees.html'
     context_object_name = 'entrees'
 
     def get_queryset(self):
@@ -37,7 +37,7 @@ class EntreeListView(ListView):
 # Soups Stews Chilis View
 class SoupStewChiliListView(ListView):
     model = SoupStewChili
-    template_name = 'soups_stews_chilis.html'
+    template_name = 'reynolds_cookbook/soups_stews_chilis.html'
     context_object_name = 'soups_stews_chilis'
 
     def get_queryset(self):
@@ -54,7 +54,7 @@ class SoupStewChiliListView(ListView):
 # Desserts View
 class DessertListView(ListView):
     model = Dessert
-    template_name = 'desserts.html'
+    template_name = 'reynolds_cookbook/desserts.html'
     context_object_name = 'desserts'
 
     def get_queryset(self):
@@ -70,15 +70,22 @@ class DessertListView(ListView):
 
 # Recipe Detail View
 class RecipeDetailView(DetailView):
-    template_name = 'recipe_detail.html'
+    model = Recipe
+    template_name = 'reynolds_cookbook/recipe_detail.html'
+    context_object_name = 'recipe'
 
-    def get_object(self):
-        category = self.kwargs.get('category')
-        recipe_id = self.kwargs.get('recipe_id')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Check if the recipe is an Entree, Dessert, or SoupStewChili
+        if hasattr(self.object, 'entree'):
+            context['recipe_type'] = 'entree'
+            context['recipe_specific'] = self.object.entree
+        elif hasattr(self.object, 'dessert'):
+            context['recipe_type'] = 'dessert'
+            context['recipe_specific'] = self.object.dessert
+        elif hasattr(self.object, 'soupstewchili'):
+            context['recipe_type'] = 'soupstewchili'
+            context['recipe_specific'] = self.object.soupstewchili
 
-        if category == 'entrees':
-            return get_object_or_404(Entree, id=recipe_id)
-        elif category == 'soups_stews_chilis':
-            return get_object_or_404(SoupStewChili, id=recipe_id)
-        elif category == 'desserts':
-            return get_object_or_404(Dessert, id=recipe_id)
+        return context
