@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import get_object_or_404
 from .models import Entree, Dessert, SoupStewChili, Recipe
@@ -27,7 +28,8 @@ class EntreeListView(ListView):
         filter_main = self.request.GET.get('filter', None)
         if filter_main:
             return Entree.objects.filter(main_feature=filter_main)
-        return Entree.objects.order_by('?')[:5]  # Default to 5 random Entrees
+        return Entree.objects.all() # Default to all Entrees
+        # return Entree.objects.order_by('?')[:5]  # Default to 5 random Entrees
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,13 +45,9 @@ class SoupStewChiliListView(ListView):
     def get_queryset(self):
         filter_type = self.request.GET.get('filter', None)
         if filter_type:
-            return SoupStewChili.objects.filter(soup_stew_chili_types__type_name=filter_type)
-        return SoupStewChili.objects.order_by('?')[:5]  # Default to 5 random recipes
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['types'] = SoupStewChili.SOUP_STEW_CHILI_TYPE_CHOICES
-        return context
+            return SoupStewChili.objects.filter(soup_type=filter_type)
+        return SoupStewChili.objects.all() # Default to all recipes
+        # return SoupStewChili.objects.order_by('?')[:5]  # Default to 5 random recipes
 
 # Desserts View
 class DessertListView(ListView):
@@ -61,7 +59,8 @@ class DessertListView(ListView):
         filter_type = self.request.GET.get('filter', None)
         if filter_type:
             return Dessert.objects.filter(dessert_type=filter_type)
-        return Dessert.objects.order_by('?')[:5]  # Default to 5 random desserts
+        return Dessert.objects.all() # Default to all Desserts
+        # return Dessert.objects.order_by('?')[:5]  # Default to 5 random desserts
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -74,18 +73,16 @@ class RecipeDetailView(DetailView):
     template_name = 'reynolds_cookbook/recipe_detail.html'
     context_object_name = 'recipe'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        # Check if the recipe is an Entree, Dessert, or SoupStewChili
-        if hasattr(self.object, 'entree'):
-            context['recipe_type'] = 'entree'
-            context['recipe_specific'] = self.object.entree
-        elif hasattr(self.object, 'dessert'):
-            context['recipe_type'] = 'dessert'
-            context['recipe_specific'] = self.object.dessert
-        elif hasattr(self.object, 'soupstewchili'):
-            context['recipe_type'] = 'soupstewchili'
-            context['recipe_specific'] = self.object.soupstewchili
+    def get_object(self, queryset=None):
+        recipe_id = self.kwargs.get('recipe_id')
+        category = self.kwargs.get('category')
 
-        return context
+        # Determine the correct model based on category
+        if category == 'entrees':
+            return Entree.objects.get(pk=recipe_id)
+        elif category == 'desserts':
+            return Dessert.objects.get(pk=recipe_id)
+        elif category == 'soups_stews_chilis':
+            return SoupStewChili.objects.get(pk=recipe_id)
+        else:
+            raise Http404("Recipe not found")

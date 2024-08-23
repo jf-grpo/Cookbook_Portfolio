@@ -1,7 +1,7 @@
 {% extends "./base.html" %}
 
 {% block content %}
-    <h1>Entrees</h1>
+    <h1>Entree Types</h1>
     <ul>
         {% for main_choice in main_choices %}
             <li><a href="{% url 'entrees' %}?filter={{ main_choice.0 }}">{{ main_choice.1 }}</a></li>

@@ -1,7 +1,7 @@
 {% extends "./base.html" %}
 
 {% block content %}
-    <h1>Desserts</h1>
+    <h1>Dessert Types</h1>
     <ul>
         {% for dessert_type in dessert_types %}
             <li><a href="{% url 'desserts' %}?filter={{ dessert_type.0 }}">{{ dessert_type.1 }}</a></li>

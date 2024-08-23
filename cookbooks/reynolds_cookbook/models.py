@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
 
 class Recipe(models.Model):
     CATEGORY_CHOICES = [
@@ -79,42 +78,9 @@ class Dessert(Recipe):
     dessert_type = models.CharField(max_length=50, choices=DESSERT_TYPE_CHOICES)
 
 class SoupStewChili(Recipe):
-    SOUP_STEW_CHILI_TYPE_CHOICES = [
-        ('Bean', 'Bean'),
-        ('Bisque', 'Bisque'),
-        ('Chicken', 'Chicken'),
-        ('Beef', 'Beef'),
-        ('Noodle', 'Noodle'),
-        ('Vegetable', 'Vegetable'),
-        ('Seafood', 'Seafood'),
+    SOUP_TYPE_CHOICES = [
+        ('Chili', 'Chili'),
+        ('Soup', 'Soup'),
+        ('Stew', 'Stew'),
     ]
-    soup_stew_chili_types = models.ManyToManyField('SoupStewChiliType')
-
-class SoupStewChiliType(models.Model):
-    type_name = models.CharField(max_length=50, choices=SoupStewChili.SOUP_STEW_CHILI_TYPE_CHOICES)
-
-    def __str__(self):
-        return self.type_name
-
-'''
-Ingredient.objects.create(recipe=recipe, name="Sugar", quantity=1.5, unit="cup")
-Ingredient.objects.create(recipe=recipe, name="Butter", quantity=200, unit="g")
-'''
-
-'''
-# Create a new Entree recipe
-entree = Entree.objects.create(
-    title="Grilled Chicken",
-    author="Chef John",
-    main_feature="Chicken"
-)
-
-# Add ingredients with quantity and unit
-Ingredient.objects.create(recipe=entree, name="Chicken breast", quantity=2, unit="piece")
-Ingredient.objects.create(recipe=entree, name="Olive oil", quantity=2, unit="tbsp")
-Ingredient.objects.create(recipe=entree, name="Salt", quantity=1, unit="tsp")
-
-# Add instructions
-Instruction.objects.create(recipe=entree, step_number=1, description="Marinate the chicken with olive oil and salt.")
-Instruction.objects.create(recipe=entree, step_number=2, description="Grill the chicken on medium heat for 6-7 minutes on each side.")
-'''
+    soup_type = models.CharField(max_length=50, choices=SOUP_TYPE_CHOICES, default='Soup')
