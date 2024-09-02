@@ -49,6 +49,11 @@ class SoupStewChiliListView(ListView):
         return SoupStewChili.objects.all() # Default to all recipes
         # return SoupStewChili.objects.order_by('?')[:5]  # Default to 5 random recipes
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['soup_types'] = SoupStewChili.SOUP_TYPE_CHOICES
+        return context
+
 # Desserts View
 class DessertListView(ListView):
     model = Dessert

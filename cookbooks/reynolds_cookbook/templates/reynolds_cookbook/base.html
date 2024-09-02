@@ -1,18 +1,23 @@
+{% load bootstrap5 %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}
-        {% endblock %}
-    </title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'categories' %}">Categories</a></li>
+        <nav class="navbar" style="background-color: #e3f2fd;">
+            <ul class="nav nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
             </ul>
         </nav>
     </header>
@@ -21,13 +26,15 @@
     {% endblock extraheader %}
 
     <main>
+        {% bootstrap_messages %}
         {% block content %}
         {% endblock %}
     </main>
-
-    <footer>
-        <p>&copy; 2024 Reynolds Cookbook</p>
-    </footer>
+    <div class="fixed-bottom">
+        <footer>
+            <p>&copy; 2024 Reynolds Cookbook</p>
+        </footer>
+    </div>
 
 </body>
 </html>

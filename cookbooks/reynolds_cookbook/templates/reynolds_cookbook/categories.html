@@ -6,19 +6,22 @@
 {% endblock %}
 
 {% block content %}
-<h1>Categories</h1>
-    <header>
-            <h2>
+    <div class="container-fluid">
+        <h1>Categories</h1>
+    </div>
+    <div class="container-fluid">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
                 <a href="{% url 'entrees' %}">Entrees</a>
-            </h2>
+            </li>
 
-            <h2>
+            <li class="list-group-item">
                 <a href="{% url 'soups_stews_chilis' %}">Soups, Stews, and Chilis</a>
-            </h2>
+            </li>
 
-            <h2>
+            <li class="list-group-item">
                 <a href="{% url 'desserts' %}">Desserts</a>
-            </h2>
-
-    </header>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

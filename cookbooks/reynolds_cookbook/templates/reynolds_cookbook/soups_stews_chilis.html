@@ -1,8 +1,7 @@
 {% extends "./base.html" %}
 
 {% block content %}
-    <h1>Soups, Stews, Chile Types</h1>
-
+    <h1>Soups, Stews, Chili Types</h1>
     <ul>
         {% for soup_type in soup_types %}
             <li><a href="{% url 'soups_stews_chilis' %}?filter={{ soup_type.0 }}">{{ soup_type.1 }}</a></li>
