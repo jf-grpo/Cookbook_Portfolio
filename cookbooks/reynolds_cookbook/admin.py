@@ -23,6 +23,11 @@ class EntreeAdmin(admin.ModelAdmin):
     list_filter = ('main_feature',)
     inlines = [IngredientInline, InstructionInline]
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields.pop('category', None)
+        return form
+
 @admin.register(Dessert)
 class DessertAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'dessert_type')
@@ -30,9 +35,19 @@ class DessertAdmin(admin.ModelAdmin):
     list_filter = ('dessert_type',)
     inlines = [IngredientInline, InstructionInline]
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields.pop('category', None)
+        return form
+
 @admin.register(SoupStewChili)
 class SoupStewChiliAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'soup_type')
     search_fields = ('title', 'author', 'soup_type')
     list_filter = ('soup_type',)
     inlines = [IngredientInline, InstructionInline]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.base_fields.pop('category', None)
+        return form

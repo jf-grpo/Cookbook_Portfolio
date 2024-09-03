@@ -1,7 +1,12 @@
+#views.py
 from django.http import Http404
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import get_object_or_404
 from .models import Entree, Dessert, SoupStewChili, Recipe
+
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from .forms import EntreeForm, DessertForm, SoupStewChiliForm
 
 # Home View
 class HomeView(TemplateView):
@@ -91,3 +96,26 @@ class RecipeDetailView(DetailView):
             return SoupStewChili.objects.get(pk=recipe_id)
         else:
             raise Http404("Recipe not found")
+        
+
+
+# Entree Create View
+class EntreeCreateView(CreateView):
+    model = Entree
+    form_class = EntreeForm
+    template_name = 'reynolds_cookbook/entree_form.html'
+    success_url = reverse_lazy('entrees')  # Redirect to the entree list view after form submission
+
+# Dessert Create View
+class DessertCreateView(CreateView):
+    model = Dessert
+    form_class = DessertForm
+    template_name = 'reynolds_cookbook/dessert_form.html'
+    success_url = reverse_lazy('desserts')  # Redirect to the dessert list view after form submission
+
+# Soup Stew Chili Create View
+class SoupStewChiliCreateView(CreateView):
+    model = SoupStewChili
+    form_class = SoupStewChiliForm
+    template_name = 'reynolds_cookbook/soup_form.html'
+    success_url = reverse_lazy('soups_stews_chilis')  # Redirect to the soup list view after form submission

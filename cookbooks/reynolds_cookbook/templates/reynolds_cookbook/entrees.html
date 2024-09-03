@@ -14,4 +14,7 @@
             <li><a href="{% url 'recipe_detail' entree.id 'entrees' %}">{{ entree.title }}</a></li>
         {% endfor %}
     </ul>
+    <div>
+        <a href="{% url 'entree-create' %}">Create a New Entree</a>
+    </div>
 {% endblock %}
