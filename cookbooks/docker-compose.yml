@@ -1,20 +1,19 @@
 # docker-compose.yml
+name: cookbook-project
+
 services:
-  web:
-    build: .
-    command: python /cookbooks/manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/cookbooks
+  postgres:
+    image: postgres
+    container_name: my-postgres-container
     ports:
-      - 8000:8000
-    depends_on:
-      - db
-  db:
-    image: postgres:14
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - "5432:5432"
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
