@@ -5,11 +5,8 @@ from django.shortcuts import get_object_or_404
 from .models import Entree, Dessert, SoupStewChili, Recipe
 
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from .forms import EntreeForm, DessertForm, SoupStewChiliForm
 
 from django.shortcuts import render, redirect
-from .forms import EntreeForm, IngredientFormSet, InstructionFormSet
 
 # Home View
 class HomeView(TemplateView):
@@ -99,97 +96,3 @@ class RecipeDetailView(DetailView):
             return SoupStewChili.objects.get(pk=recipe_id)
         else:
             raise Http404("Recipe not found")
-        
-
-class EntreeCreateView(CreateView):
-    model = Entree
-    form_class = EntreeForm
-    template_name = 'reynolds_cookbook/entree_form.html'
-    success_url = reverse_lazy('entrees')
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data['ingredient_formset'] = IngredientFormSet(self.request.POST)
-            data['instruction_formset'] = InstructionFormSet(self.request.POST)
-        else:
-            data['ingredient_formset'] = IngredientFormSet()
-            data['instruction_formset'] = InstructionFormSet()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        ingredient_formset = context['ingredient_formset']
-        instruction_formset = context['instruction_formset']
-        if form.is_valid() and ingredient_formset.is_valid() and instruction_formset.is_valid():
-            self.object = form.save()
-            ingredient_formset.instance = self.object
-            instruction_formset.instance = self.object
-            ingredient_formset.save()
-            instruction_formset.save()
-            return redirect(self.get_success_url())
-        else:
-            return self.form_invalid(form)
-
-
-# Dessert Create View
-class DessertCreateView(CreateView):
-    model = Dessert
-    form_class = DessertForm
-    template_name = 'reynolds_cookbook/dessert_form.html'
-    success_url = reverse_lazy('desserts')  # Redirect to the dessert list view after form submission
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data['ingredient_formset'] = IngredientFormSet(self.request.POST)
-            data['instruction_formset'] = InstructionFormSet(self.request.POST)
-        else:
-            data['ingredient_formset'] = IngredientFormSet()
-            data['instruction_formset'] = InstructionFormSet()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        ingredient_formset = context['ingredient_formset']
-        instruction_formset = context['instruction_formset']
-        if form.is_valid() and ingredient_formset.is_valid() and instruction_formset.is_valid():
-            self.object = form.save()
-            ingredient_formset.instance = self.object
-            instruction_formset.instance = self.object
-            ingredient_formset.save()
-            instruction_formset.save()
-            return redirect(self.get_success_url())
-        else:
-            return self.form_invalid(form)
-
-# Soup Stew Chili Create View
-class SoupStewChiliCreateView(CreateView):
-    model = SoupStewChili
-    form_class = SoupStewChiliForm
-    template_name = 'reynolds_cookbook/soup_form.html'
-    success_url = reverse_lazy('soups_stews_chilis')  # Redirect to the soup list view after form submission
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data['ingredient_formset'] = IngredientFormSet(self.request.POST)
-            data['instruction_formset'] = InstructionFormSet(self.request.POST)
-        else:
-            data['ingredient_formset'] = IngredientFormSet()
-            data['instruction_formset'] = InstructionFormSet()
-        return data
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        ingredient_formset = context['ingredient_formset']
-        instruction_formset = context['instruction_formset']
-        if form.is_valid() and ingredient_formset.is_valid() and instruction_formset.is_valid():
-            self.object = form.save()
-            ingredient_formset.instance = self.object
-            instruction_formset.instance = self.object
-            ingredient_formset.save()
-            instruction_formset.save()
-            return redirect(self.get_success_url())
-        else:
-            return self.form_invalid(form)

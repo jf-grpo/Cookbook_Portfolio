@@ -14,7 +14,4 @@
             <li><a href="{% url 'recipe_detail' dessert.id 'desserts' %}">{{ dessert.title }}</a></li>
         {% endfor %}
     </ul>
-    <div>
-        <a href="{% url 'dessert-create' %}">Create a New Dessert</a>
-    </div>
 {% endblock %}

@@ -14,7 +14,4 @@
             <li><a href="{% url 'recipe_detail' soup_stew_chili.id 'soups_stews_chilis' %}">{{ soup_stew_chili.title }}</a></li>
         {% endfor %}
     </ul>
-    <div>
-        <a href="{% url 'soup-create' %}">Create a Soup, Stew, or Chili</a>
-    </div>
 {% endblock %}

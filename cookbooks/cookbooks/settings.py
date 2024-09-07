@@ -82,6 +82,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cookbook',
+#         'USER': 'cookbookuser',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost', # set in docker-compose.yml
+#         'PORT': '', # default postgres port
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
