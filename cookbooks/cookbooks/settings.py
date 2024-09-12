@@ -96,17 +96,28 @@ WSGI_APPLICATION = 'cookbooks.wsgi.application'
 # }
 
 # for connecting to local postgres db on Joe's machine (Thelio, system76, Ubuntu 22.04)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cookbook',
+#         'USER': 'cookbookuser',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost', # set in docker-compose.yml
+#         'PORT': '5432', # default postgres port
+#     }
+# }
+
+# for connecting to postgres db in docker container
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost', # set in docker-compose.yml
-        'PORT': '5432', # default postgres port
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'), # set in docker-compose.yml
+        'PORT': 5432, # default postgres port
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
