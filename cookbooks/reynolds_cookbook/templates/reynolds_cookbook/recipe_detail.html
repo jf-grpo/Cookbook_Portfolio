@@ -2,19 +2,21 @@
 
 {% block content %}
     <div class="card">
-        <h1>{{ recipe.title }}</h1>
-        <p><strong>Author:</strong> {{ recipe.author }}</p>
-        <h2>Ingredients</h2>
-        <ul>
-            {% for ingredient in recipe.ingredients.all %}
-                <li>{{ ingredient.quantity }} {{ ingredient.get_unit_display }} of {{ ingredient.name }}</li>
-            {% endfor %}
-        </ul>
-        <h2>Instructions</h2>
-        <ul>
+      <div class="card-body">
+        <h4 class="card-title">{{ recipe.title }}</h4>
+          <h5 class="card-subtitle mb-2 text-body-secondary">Author:</strong> {{ recipe.author }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">Ingredients</h6>
+            <ul class="list-group list-group-flush">
+                {% for ingredient in recipe.ingredients.all %}
+                    <li class="list-group-item">{{ ingredient.quantity }} {{ ingredient.get_unit_display }} of {{ ingredient.name }}</li>
+                {% endfor %}
+            </ul>
+        <h4 class="card-subtitle mb-2 text-body-secondary">Instructions</h4>
+        <ul class="list-group list-group-flush">
             {% for instruction in recipe.instructions.all %}
-                <li>{{ instruction.step_number }}: {{ instruction.description }}</li>
+                <li class="list-group-item">{{ instruction.step_number }}: {{ instruction.description }}</li>
             {% endfor %}
         </ul>
+      </div>
     </div>
 {% endblock %}
