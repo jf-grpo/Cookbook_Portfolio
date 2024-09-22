@@ -3,8 +3,7 @@ name: cookbook-project
 
 services:
   app:
-    build: .
-    image: cookbook-image
+    image: joefred101/django-postgres-cookbook:mult_v1
     container_name: cookbook-container
     command: /app/entrypoint.sh
     ports:
